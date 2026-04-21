@@ -18,6 +18,7 @@ struct Home: View {
                     Label("Menu",
                     systemImage: "list.dash")
                 })
+                
         }
     }
 }
