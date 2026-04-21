@@ -2,7 +2,7 @@
 //  Home.swift
 //  Little Lemon
 //
-//  Created by Anisha Gurung on 4/21/26.
+//  Created by Ashok Tamang on 4/21/26.
 //
 
 import SwiftUI
