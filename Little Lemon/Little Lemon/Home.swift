@@ -10,7 +10,14 @@ import SwiftUI
 struct Home: View {
     var body: some View {
         TabView {
-            
+            /*Tab("Menu", systemImage: "list.dash") {
+                   Menu()
+               }*/
+            Menu()
+                .tabItem({
+                    Label("Menu",
+                    systemImage: "list.dash")
+                })
         }
     }
 }

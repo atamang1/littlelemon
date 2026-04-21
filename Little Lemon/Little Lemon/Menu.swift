@@ -29,11 +29,14 @@ struct Menu: View {
                 Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
                     .font(.system(size: 18))
             }
-            .padding()
+            .padding(20)
             .frame(maxWidth: .infinity)
             .background(Color.green)
 
-           
+           //List of menu items
+            List {
+                
+            }
             
             
         }
