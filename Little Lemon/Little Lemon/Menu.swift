@@ -9,7 +9,34 @@ import SwiftUI
 
 struct Menu: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            // Head Logo and Profile
+            HStack{
+                Image("Logo")
+                    .resizable()
+                    .frame(width: 200, height: 50)
+                    .padding(.horizontal,30)
+                Image("Profile")
+                    .resizable()
+                    .frame(width: 70, height: 70)
+            }
+            // About Restaurant
+            VStack(alignment: .leading){
+                Text("Little Lemon")
+                    .font(.system(size: 64))
+                Text("Chicago")
+                    .font(.system(size: 40))
+                Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
+                    .font(.system(size: 18))
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.green)
+
+           
+            
+            
+        }
     }
 }
 
