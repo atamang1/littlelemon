@@ -1,0 +1,7 @@
+# Xcode user settings (the file bothering)
+userdata/
+# Xcode specific
+*.xcuserstate
+
+# macOS junk
+.DS_Store
