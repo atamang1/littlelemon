@@ -19,6 +19,7 @@ struct Onboarding: View {
     @State var firstName:String = ""
     @State var lastName:String = ""
     @State var email:String = ""
+    @State var isLoggedIn:Bool = false
     
     // helper function to validate email
     func isValidEmail(_ email: String) -> Bool {
@@ -29,40 +30,50 @@ struct Onboarding: View {
     
     var body: some View {
         //Login
-        VStack {
-            //Little lemon logo
-            Image("Little Lemon logo")
-                .resizable()
-                .frame(width: 150, height: 220)
-                .padding(.bottom, 14)
-            
-            // Take users input
-            TextField("First Name", text: $firstName)
-            TextField("Last Name", text: $lastName)
-            TextField("Email", text: $email)
-            
-            //Button to complete the registration
-            Button("Register") {
-                if (!firstName.isEmpty && !lastName.isEmpty && !email.isEmpty ) {
-                    UserDefaults.standard.set(firstName, forKey: kFirstName)
-                    UserDefaults.standard.set(lastName, forKey: kLastName)
-                    
-                    if(isValidEmail(email)) {
-                        UserDefaults.standard.set(email, forKey: kEmail)
+        NavigationStack {
+            VStack {
+                //Little lemon logo
+                Image("Little Lemon logo")
+                    .resizable()
+                    .frame(width: 150, height: 220)
+                    .padding(.bottom, 14)
+                
+                // Take users input
+                TextField("First Name", text: $firstName)
+                TextField("Last Name", text: $lastName)
+                TextField("Email", text: $email)
+                
+                //Button to complete the registration
+                Button("Register") {
+                    if (!firstName.isEmpty && !lastName.isEmpty && !email.isEmpty ) {
+                        UserDefaults.standard.set(firstName, forKey: kFirstName)
+                        UserDefaults.standard.set(lastName, forKey: kLastName)
+                        
+                        if(isValidEmail(email)) {
+                            UserDefaults.standard.set(email, forKey: kEmail)
+                        }
+                        
+                        isLoggedIn = true
+                            
                     }
-                    
                 }
+                .frame(maxWidth: 250)
+                .padding()
+                .background(Color.blue.opacity(1))
+                .border(Color.blue.opacity(0.1), width: 1)
+                .cornerRadius(10)
+                .foregroundColor(.primaryColor1)
+                
+                
             }
-            .frame(maxWidth: 250)
-            .padding()
-            .background(Color.blue.opacity(1))
-            .border(Color.blue.opacity(0.1), width: 1)
-            .cornerRadius(10)
-            .foregroundColor(.primaryColor1)
-            
+            .textFieldStyle(myTextFieldStyle())
+            .navigationDestination(isPresented: $isLoggedIn) {
+                Home()
+            }
             
         }
-        .textFieldStyle(myTextFieldStyle())
+        
+
     }
 }
 
