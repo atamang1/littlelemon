@@ -20,6 +20,7 @@ struct Home: View {
                 })
                 
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
