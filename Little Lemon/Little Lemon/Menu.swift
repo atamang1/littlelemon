@@ -16,7 +16,7 @@ struct Menu: View {
                     .resizable()
                     .frame(width: 200, height: 50)
                     .padding(.horizontal,30)
-                Image("Profile")
+                Image("Profile-image-placeholder")
                     .resizable()
                     .frame(width: 70, height: 70)
             }

@@ -12,6 +12,7 @@ import SwiftUI
 let kFirstName = "first name key"
 let kLastName = "last name key"
 let kEmail = "email key"
+let kIsLoggedIn = "kIsLoggedIn"
 
 
 struct Onboarding: View {
@@ -54,6 +55,7 @@ struct Onboarding: View {
                         }
                         
                         isLoggedIn = true
+                        UserDefaults.standard.set(isLoggedIn, forKey: kIsLoggedIn)
                             
                     }
                 }
@@ -69,6 +71,12 @@ struct Onboarding: View {
             .textFieldStyle(myTextFieldStyle())
             .navigationDestination(isPresented: $isLoggedIn) {
                 Home()
+            }
+            .onAppear(){
+                // check if user already logged in
+                if UserDefaults.standard.bool(forKey: "kIsLoggedIn") {
+                    isLoggedIn = true
+                }
             }
             
         }
