@@ -136,6 +136,7 @@ struct Menu: View {
             
         }
         .onAppear(){
+            PersistenceController.shared.clear()
             getMenuData() //calling method to get the data each time user goes into the menu screen
         }
     }

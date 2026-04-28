@@ -16,9 +16,23 @@ struct PersistenceController {
     }
     
     func clear() {
-        // Delete all dishes from the store
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Dish")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        let _ = try? container.persistentStoreCoordinator.execute(deleteRequest, with: container.viewContext)
+        
+        // 1. Specify that you want the IDs of deleted objects returned
+        deleteRequest.resultType = .resultTypeObjectIDs
+
+        do {
+            // 2. Execute and capture the result
+            let result = try container.viewContext.execute(deleteRequest) as? NSBatchDeleteResult
+            let objectIDs = result?.result as? [NSManagedObjectID] ?? []
+            
+            // 3. Merge the deletions back into the viewContext
+            let changes = [NSDeletedObjectsKey: objectIDs]
+            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [container.viewContext])
+        } catch {
+            print("Failed to clear data: \(error)")
+        }
     }
+
 }
