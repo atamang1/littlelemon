@@ -11,6 +11,9 @@ struct Menu: View {
     //Home screen will initialize the Core Data and pass its view context to the Menu instance on initialization
     @Environment(\.managedObjectContext) private var viewContext // allows to access Core Data managed object context directly within a view
     
+    //to store search input
+   @State var searchText = ""
+    
     // Querying the server
     func getMenuData () {
         // It will make sure that the database is cleared of all
@@ -54,6 +57,28 @@ struct Menu: View {
         
     }
     
+    //this function returns a predicte to filter the FetchedObjects result
+    func buildPredicate () -> NSPredicate {
+        //if search text is empty then show all list
+        if searchText.isEmpty {
+            return NSPredicate(value: true)
+        }
+        
+        // return only list that matches the search text
+        return NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+    }
+    
+    
+    //Sorting by name
+    //returns an array or sort descriptors for Dish objects
+    func buildSortDescriptors() -> [NSSortDescriptor] {
+        return [NSSortDescriptor(
+            key: "title",
+            ascending: true,
+            selector: #selector(NSString.localizedStandardCompare)
+        )]
+    }
+    
     
     var body: some View {
         VStack {
@@ -76,14 +101,17 @@ struct Menu: View {
                     .font(.system(size: 40))
                 Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
                     .font(.system(size: 18))
+              
+                TextField("Search menu", text: $searchText)
             }
             .padding(20)
             .frame(maxWidth: .infinity)
             .background(Color.green)
-
+            
+           
            //this will fetch all the Dishes from the core data
             // and make them available to use in the closure.
-            FetchedObjects() { (dishes: [Dish]) in
+            FetchedObjects(predicate: buildPredicate(), sortDescriptors: buildSortDescriptors()) { (dishes: [Dish]) in
                 List {
                     ForEach(dishes) { dish in
                         NavigationLink(destination: Details(dish: dish)){
