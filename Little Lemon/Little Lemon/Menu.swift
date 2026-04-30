@@ -213,9 +213,12 @@ struct Menu: View {
                     ForEach(dishes) { dish in
                         NavigationLink(destination: Details(dish: dish)){
                             HStack {
-                                
-                                Text("\(dish.title ?? "")")
-                                Text("\(dish.price ?? "")")
+                                VStack(alignment: .leading){
+                                    Text("\(dish.title ?? "")")
+                                    Text("$" + "\(dish.price ?? "")")
+                                }
+                              
+                                Spacer()
                                 AsyncImage(url: URL(string: dish.image ?? "")) { image in
                                     image.resizable()
                                 } placeholder: {
